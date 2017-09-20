@@ -1,0 +1,102 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+
+version = '1.0.0'
+ext {
+    bintrayRepo = 'Android-Lib'
+    publishedGroupId = 'com.ech0s7r.android'
+    libraryName = 'androidlog'
+    artifact = 'loggerlib'
+
+    libraryDescription = 'Android logger library'
+
+    libraryVersion = version
+
+    siteUrl = 'https://github.com/ech0s7r/androidlog'
+    gitUrl = 'https://github.com/ech0s7r/androidlog.git'
+
+    developerId = 'ech0s7r'
+    developerName = 'ech0s7r'
+    developerEmail = 'ech0s7r@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+}
+
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 20
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+configurations {
+    lintLibrary
+}
+
+dependencies {
+    lintLibrary project(path: ":lintrules", configuration: "lintChecks")
+}
+
+task copyLintJar(type: Copy){
+    from (configurations.lintLibrary) {
+        rename {
+            String fileName ->
+                'lint.jar'
+        }
+    }
+    into 'build/intermediates/lint/'
+}
+
+
+project.afterEvaluate{
+    def compileLintTask = project.tasks.find {it.name == 'compileLint'}
+    compileLintTask.dependsOn(copyLintJar)
+}
+
+
+/*************/
+/** Bintray **/
+/*************/
+Properties properties = new Properties()
+if (project.rootProject.file('local.properties').exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER') ? System.getenv('BINTRAY_USER') : properties.getProperty("bintray.user")
+    key = System.getenv('BINTRAY_API_KEY') ? System.getenv('BINTRAY_API_KEY') : properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = 'Android-Lib'
+        name = 'androidlog'
+        userOrg = 'ech0s7r'
+        desc = 'Android logger library'
+        websiteUrl = 'https://github.com/ech0s7r/androidlog'
+        vcsUrl = websiteUrl + '.git'
+        licenses = ['Apache-2.0']
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            name = '1.0.0'
+            desc = 'Android logger library'
+            released = new Date()
+            vcsTag = 'v1.0.0'
+
+        }
+    }
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
