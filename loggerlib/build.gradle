@@ -1,7 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 
-version = '1.0.0'
+def libVersion = '1.1.2'
+
+version = libVersion
 ext {
     bintrayRepo = 'Android-Lib'
     publishedGroupId = 'com.ech0s7r.android'
@@ -10,7 +12,7 @@ ext {
 
     libraryDescription = 'Android logger library'
 
-    libraryVersion = version
+    libraryVersion = libVersion
 
     siteUrl = 'https://github.com/ech0s7r/androidlog'
     gitUrl = 'https://github.com/ech0s7r/androidlog.git'
@@ -35,7 +37,9 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            useProguard true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -90,10 +94,10 @@ bintray {
         publish = true
         publicDownloadNumbers = true
         version {
-            name = '1.0.0'
+            name = libVersion
             desc = 'Android logger library'
             released = new Date()
-            vcsTag = 'v1.0.0'
+            vcsTag = 'v' + libVersion
 
         }
     }
