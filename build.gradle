@@ -1,8 +1,8 @@
 buildscript {
 
     ext {
-        gradlePluginVersion = '3.0.0-beta5'
-        lintVersion = '26.0.0-beta5'
+        gradlePluginVersion = '3.0.0-beta6'
+        lintVersion = '26.0.0-beta6'
     }
 
     repositories {
