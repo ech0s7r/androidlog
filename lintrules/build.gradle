@@ -5,20 +5,20 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.tools.lint:lint-api:25.3.0'
-    compile 'com.android.tools.lint:lint-checks:25.3.0'
+    compileOnly "com.android.tools.lint:lint-api:$lintVersion"
+    compileOnly "com.android.tools.lint:lint-checks:$lintVersion"
+    testCompile "junit:junit:4.12"
+    testCompile "com.android.tools.lint:lint:$lintVersion"
+    testCompile "com.android.tools.lint:lint-tests:$lintVersion"
+    testCompile "com.android.tools:testutils:$lintVersion"
 }
 
 jar {
     manifest {
+        //attributes("Lint-Registry": "com.ech0s7r.android.lintrules.LintRegistry")
+        // Only use the "-v2" key here if your checks have been updated to the
+        // new 3.0 APIs (including UAST)
+        //attributes("Lint-Registry-v2": "com.ech0s7r.android.lintrules.LintRegistry")
         attributes("Lint-Registry": "com.ech0s7r.android.lintrules.LintRegistry")
     }
-}
-
-configurations {
-    lintChecks
-}
-
-dependencies {
-    lintChecks files(jar)
 }

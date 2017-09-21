@@ -1,10 +1,16 @@
 buildscript {
+
+    ext {
+        gradlePluginVersion = '3.0.0-beta5'
+        lintVersion = '26.0.0-beta5'
+    }
+
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-beta6'
+        classpath "com.android.tools.build:gradle:$gradlePluginVersion"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
     }
@@ -12,6 +18,11 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
     }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 
-def libVersion = '1.1.2'
+def libVersion = '1.1.6'
 
 version = libVersion
 ext {
@@ -27,11 +27,10 @@ ext {
 
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 26
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 20
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -45,29 +44,11 @@ android {
     }
 }
 
-configurations {
-    lintLibrary
-}
 
 dependencies {
-    lintLibrary project(path: ":lintrules", configuration: "lintChecks")
+    lintChecks project(':lintrules')
 }
 
-task copyLintJar(type: Copy){
-    from (configurations.lintLibrary) {
-        rename {
-            String fileName ->
-                'lint.jar'
-        }
-    }
-    into 'build/intermediates/lint/'
-}
-
-
-project.afterEvaluate{
-    def compileLintTask = project.tasks.find {it.name == 'compileLint'}
-    compileLintTask.dependsOn(copyLintJar)
-}
 
 
 /*************/
