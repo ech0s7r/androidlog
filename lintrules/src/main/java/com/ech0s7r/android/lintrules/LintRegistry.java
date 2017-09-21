@@ -17,8 +17,8 @@ public class LintRegistry extends IssueRegistry {
 				AndroidLogDetector.ISSUE,
 				PrintStackTraceDetector.ISSUE,
 				SystemOutDetector.ISSUE,
-				NoLoggedException.ISSUE,
-				NoBaseActivity.ISSUE
+				NoLoggedException.ISSUE//,
+				//NoBaseActivity.ISSUE
 		);
 	}
 }

@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         try {
             throw new Exception("TestException");
         } catch (Exception e) {
-            Logger.e(e);
+
         }
     }
 

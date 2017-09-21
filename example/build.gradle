@@ -19,7 +19,7 @@ android {
         }
     }
 
-    lintOptions {
+   lintOptions {
         checkReleaseBuilds true
         abortOnError true
         ignoreWarnings true
