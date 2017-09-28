@@ -119,12 +119,16 @@ public class Logger implements Cloneable {
         //(SystemClock.elapsedRealtime() - elapsed) + " ms.");
     }
 
+    private void writeLog(LogMsg msg, LogAppender appender) {
+        LogLayout layout = appender.getLogLayout();
+        String str = layout.format(msg);
+        appender.writeLog(msg.level, str, msg.throwable);
+    }
+
     private void writeLog(LogMsg msg) {
         if (isLoggable(msg)) {
             for (LogAppender appender : LoggerConfigurator.getLogAppenderList()) {
-                LogLayout layout = appender.getLogLayout();
-                String str = layout.format(msg);
-                appender.writeLog(msg.level, str, msg.throwable);
+                writeLog(msg, appender);
             }
         }
     }
