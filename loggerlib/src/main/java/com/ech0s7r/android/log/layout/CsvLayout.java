@@ -18,12 +18,12 @@ import static com.ech0s7r.android.log.LoggerConfigurator.VERSION_NAME;
 @SuppressWarnings("unused")
 public class CsvLayout extends LogLayout {
 
-	private static final String QUOTE_REPLACEMENT = Matcher.quoteReplacement("\\\"");
+    private static final String QUOTE_REPLACEMENT = Matcher.quoteReplacement("\\\"");
 
-	@Override
-	public String format(LogMsg msg) {
-		String str = String.format(Locale.ENGLISH, "%s,%s,%s,%d,%s,%s,%s,%d,%d,%d,%s,%s,%s,%d,\"%s\",\"%s\"",
-				/* 1 date*/msg.getTimeStamp(),
+    @Override
+    public String format(LogMsg msg) {
+        String str = String.format(Locale.ENGLISH, "%s,%s,%s,%d,%s,%s,%s,%d,%d,%d,%s,%s,%s,%d,\"%s\",\"%s\"",
+                /* 1 date*/msg.getTimeStamp(),
 				/* 2 log level*/msg.level,
 				/* 3 Version*/VERSION_NAME,
 				/* 4 Company id*/APP_ID,
@@ -42,42 +42,42 @@ public class CsvLayout extends LogLayout {
 
 				/*15 Description*/escapeQuote(normalizeMsg(msg.msg)),
 				/*16 Stacktrace*/escapeQuote(normalizeMsg(msg.throwable))
-		);
-		return str;
-	}
+        );
+        return str;
+    }
 
-	private String escapeQuote(String text) {
-		if (text == null) {
-			return "";
-		}
-		String escaped = text.replace("\\", "\\\\");
-		escaped = escaped.replace("\"", "\\\"");
-		return escaped;
-	}
+    private String escapeQuote(String text) {
+        if (text == null) {
+            return "";
+        }
+        String escaped = text.replace("\\", "\\\\");
+        escaped = escaped.replace("\"", "\\\"");
+        return escaped;
+    }
 
-	private String normalizeMsg(Object msg) {
-		if (msg instanceof Throwable) {
-			return stackOneLine((Throwable) msg);
-		}
-		return oneLine(msg != null ? msg.toString() : "", "");
-	}
+    private String normalizeMsg(Object msg) {
+        if (msg instanceof Throwable) {
+            return stackOneLine((Throwable) msg);
+        }
+        return oneLine(msg != null ? msg.toString() : "", "");
+    }
 
 
-	private String stackOneLine(Throwable t) {
-		return oneLine(Log.getStackTraceString(t), ";");
-	}
+    private String stackOneLine(Throwable t) {
+        return oneLine(Log.getStackTraceString(t), ";");
+    }
 
-	private String oneLine(String msg, String separator) {
-		if (msg == null) {
-			return "";
-		}
-		StringBuilder builder = new StringBuilder();
-		String tkn[] = msg.split("\n");
-		for (String s : tkn) {
-			builder.append(s.trim());
-			builder.append(separator);
-		}
-		return builder.toString();
-	}
+    private String oneLine(String msg, String separator) {
+        if (msg == null) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        String tkn[] = msg.split("\n");
+        for (String s : tkn) {
+            builder.append(s.trim());
+            builder.append(separator);
+        }
+        return builder.toString();
+    }
 
 }

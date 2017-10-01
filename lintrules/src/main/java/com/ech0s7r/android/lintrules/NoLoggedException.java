@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Lint rule: No Logged exception detector
  * <p>
+ *
  * @author marco.rocco
  */
 

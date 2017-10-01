@@ -23,31 +23,31 @@ import java.util.List;
 @SuppressWarnings("unused")
 public final class SystemOutDetector extends Detector implements Detector.JavaPsiScanner {
 
-	public static final Issue ISSUE = Issue.create(
-			"SystemOutDetector",
-			"Use of java.lang.System",
-			"Instead of java.lang.System*, use RiM Logger library",
-			Category.CORRECTNESS,
-			8,
-			Severity.FATAL,
-			new Implementation(SystemOutDetector.class, Scope.JAVA_FILE_SCOPE));
+    public static final Issue ISSUE = Issue.create(
+            "SystemOutDetector",
+            "Use of java.lang.System",
+            "Instead of java.lang.System*, use RiM Logger library",
+            Category.CORRECTNESS,
+            8,
+            Severity.FATAL,
+            new Implementation(SystemOutDetector.class, Scope.JAVA_FILE_SCOPE));
 
 
-	@Override
-	public List<String> getApplicableMethodNames() {
-		return Arrays.asList("print", "println");
-	}
+    @Override
+    public List<String> getApplicableMethodNames() {
+        return Arrays.asList("print", "println");
+    }
 
-	@Override
-	public void visitMethod(JavaContext context, JavaElementVisitor visitor,
-							PsiMethodCallExpression call, PsiMethod method) {
-		PsiReferenceExpression methodExpression = call.getMethodExpression();
-		String fullyQualifiedMethodName = methodExpression.getQualifiedName();
+    @Override
+    public void visitMethod(JavaContext context, JavaElementVisitor visitor,
+                            PsiMethodCallExpression call, PsiMethod method) {
+        PsiReferenceExpression methodExpression = call.getMethodExpression();
+        String fullyQualifiedMethodName = methodExpression.getQualifiedName();
 //		log("fullyQualifiedMethodName=[" + fullyQualifiedMethodName + "]" + " " + call + " " + method);
 //		log(method.getClass().getSimpleName());
-		if (fullyQualifiedMethodName.contains("System.out.print") || fullyQualifiedMethodName.contains("System.err.print")) {
-			context.report(ISSUE, call, context.getLocation(methodExpression), ISSUE.getBriefDescription(TextFormat.TEXT));
-		}
-	}
+        if (fullyQualifiedMethodName.contains("System.out.print") || fullyQualifiedMethodName.contains("System.err.print")) {
+            context.report(ISSUE, call, context.getLocation(methodExpression), ISSUE.getBriefDescription(TextFormat.TEXT));
+        }
+    }
 
 }
