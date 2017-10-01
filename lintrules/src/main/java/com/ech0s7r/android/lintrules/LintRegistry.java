@@ -11,14 +11,14 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public class LintRegistry extends IssueRegistry {
-	@Override
-	public List<Issue> getIssues() {
-		return ImmutableList.of(
-				AndroidLogDetector.ISSUE,
-				PrintStackTraceDetector.ISSUE,
-				SystemOutDetector.ISSUE,
-				NoLoggedException.ISSUE//,
-				//NoBaseActivity.ISSUE
-		);
-	}
+    @Override
+    public List<Issue> getIssues() {
+        return ImmutableList.of(
+                AndroidLogDetector.ISSUE,
+                PrintStackTraceDetector.ISSUE,
+                SystemOutDetector.ISSUE,
+                NoLoggedException.ISSUE//,
+                //NoBaseActivity.ISSUE
+        );
+    }
 }

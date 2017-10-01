@@ -8,6 +8,9 @@ import android.os.Message;
 import com.ech0s7r.android.log.appender.LogAppender;
 import com.ech0s7r.android.log.layout.LogLayout;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 /**
  * @author marco.rocco
@@ -69,7 +72,7 @@ public class Logger implements Cloneable {
         private static Logger myInstance = new Logger();
     }
 
-    /*package*/static Level logLevel = Level.INFO; // Default
+    /*package*/static Level logLevel = Level.VERBOSE; // Default
 
     public static final long MAX_FILE_LINE = 0; // 0 to disable it
 
@@ -81,9 +84,12 @@ public class Logger implements Cloneable {
 
     protected static boolean sUseHandlerThread;
 
+    private Queue<LogMsg> localQueue;
+
 
     @SuppressLint({"AndroidLogDetector", "NoLoggedException"})
     private Logger() {
+        localQueue = new LinkedList<>();
         createThreadHandler();
     }
 
@@ -107,13 +113,19 @@ public class Logger implements Cloneable {
     @SuppressLint({"AndroidLogDetector"})
     private void sendWrite(LogMsg msg) {
         //long elapsed = SystemClock.elapsedRealtime();
-        if (sUseHandlerThread && msg.level != Level.ASSERT) {
-            if (!mHandlerThread.isAlive()) {
-                createThreadHandler();
+        if (LoggerConfigurator.isValid()) {
+            wipeQueue();
+            if (sUseHandlerThread && msg.level != Level.ASSERT) {
+                if (!mHandlerThread.isAlive()) {
+                    createThreadHandler();
+                }
+                mHandler.obtainMessage(0, msg).sendToTarget();
+            } else {
+                writeLog(msg);
             }
-            mHandler.obtainMessage(0, msg).sendToTarget();
         } else {
-            writeLog(msg);
+            // config not valid or not init yet, enqueue in local
+            localQueue.add(msg);
         }
         //Log.d(LoggerConfigurator.APP_NAME, "Logger.sendWrite time: " +
         //(SystemClock.elapsedRealtime() - elapsed) + " ms.");
@@ -129,6 +141,15 @@ public class Logger implements Cloneable {
         if (isLoggable(msg)) {
             for (LogAppender appender : LoggerConfigurator.getLogAppenderList()) {
                 writeLog(msg, appender);
+            }
+        }
+    }
+
+    private void wipeQueue() {
+        LogMsg msg;
+        if (localQueue.size() != 0) {
+            while ((msg = localQueue.poll()) != null) {
+                writeLog(msg);
             }
         }
     }
