@@ -147,7 +147,7 @@ try {
 
 ### Compilation time check (Lint integration)
 
-The library implements 3 kinds of custom Lint rules to avoid common error and promote the usage of this library instead of the android built-in logger library. These rules are checked at compile time and if not respected an error will be generated during the build process. The Lint scanning tools, in case of build error, generate an HTML file that can be controlled to see where the following rules are not observed.
+The library implements 4 kinds of custom Lint rules to avoid common error and promote the usage of this library instead of the android built-in logger library. These rules are checked at compile time and if not respected an error will be generated during the build process. The Lint scanning tools, in case of build error, generate an HTML file that can be controlled to see where the following rules are not observed.
 
 - ##### SystemOutDetector
 
