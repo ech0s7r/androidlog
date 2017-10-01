@@ -7,6 +7,6 @@ import com.ech0s7r.android.log.LogMsg;
  */
 public abstract class LogLayout {
 
-	public abstract String format(LogMsg logMsg);
-	
+    public abstract String format(LogMsg logMsg);
+
 }

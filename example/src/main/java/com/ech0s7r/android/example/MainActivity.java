@@ -17,6 +17,9 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        for (int i = 0; i < 5; i++)
+            Logger.w("Test before init");
+
         initLog();
 
         for (int i = 0; i < 5; i++)
