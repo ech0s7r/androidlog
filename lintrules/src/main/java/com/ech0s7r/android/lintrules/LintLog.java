@@ -11,20 +11,20 @@ import java.io.PrintWriter;
 
 public class LintLog {
 
-	private static final File LOG_FILE = new File("C:\\Users\\Marco.Rocco\\Downloads\\lint.log");
-	private static PrintWriter sPrintWriter;
+    private static final File LOG_FILE = new File("C:\\Users\\Marco.Rocco\\Downloads\\lint.log");
+    private static PrintWriter sPrintWriter;
 
-	public static void log(String txt) {
-		if (sPrintWriter == null) {
-			try {
-				sPrintWriter = new PrintWriter(new FileWriter(LOG_FILE, true));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if (sPrintWriter != null) {
-			sPrintWriter.println(txt);
-			sPrintWriter.flush();
-		}
-	}
+    public static void log(String txt) {
+        if (sPrintWriter == null) {
+            try {
+                sPrintWriter = new PrintWriter(new FileWriter(LOG_FILE, true));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (sPrintWriter != null) {
+            sPrintWriter.println(txt);
+            sPrintWriter.flush();
+        }
+    }
 }

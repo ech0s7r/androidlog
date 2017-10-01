@@ -12,16 +12,16 @@ import com.ech0s7r.android.log.layout.LogLayout;
 
 public abstract class LogAppender {
 
-	private LogLayout mLogLayout;
+    private LogLayout mLogLayout;
 
-	protected LogAppender(LogLayout layout) {
-		mLogLayout = layout;
-	}
+    protected LogAppender(LogLayout layout) {
+        mLogLayout = layout;
+    }
 
-	public LogLayout getLogLayout() {
-		return mLogLayout;
-	}
+    public LogLayout getLogLayout() {
+        return mLogLayout;
+    }
 
 
-	public abstract void writeLog(Logger.Level logLevel, String msg, Throwable tr);
+    public abstract void writeLog(Logger.Level logLevel, String msg, Throwable tr);
 }

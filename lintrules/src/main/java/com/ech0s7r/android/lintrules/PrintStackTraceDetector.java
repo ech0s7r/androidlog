@@ -23,30 +23,30 @@ import java.util.List;
 @SuppressWarnings("unused")
 public final class PrintStackTraceDetector extends Detector implements Detector.JavaPsiScanner {
 
-	public static final Issue ISSUE = Issue.create(
-			"PrintStackTraceDetector",
-			"Do not use printStackTrace",
-			"Instead of printStackTrace, use RiM Logger library",
-			Category.CORRECTNESS,
-			8,
-			Severity.FATAL,
-			new Implementation(PrintStackTraceDetector.class, Scope.JAVA_FILE_SCOPE));
+    public static final Issue ISSUE = Issue.create(
+            "PrintStackTraceDetector",
+            "Do not use printStackTrace",
+            "Instead of printStackTrace, use RiM Logger library",
+            Category.CORRECTNESS,
+            8,
+            Severity.FATAL,
+            new Implementation(PrintStackTraceDetector.class, Scope.JAVA_FILE_SCOPE));
 
-	@Override
-	public List<String> getApplicableMethodNames() {
-		return Arrays.asList("printStackTrace");
-	}
+    @Override
+    public List<String> getApplicableMethodNames() {
+        return Arrays.asList("printStackTrace");
+    }
 
-	@Override
-	public void visitMethod(JavaContext context, JavaElementVisitor visitor,
-							PsiMethodCallExpression call, PsiMethod method) {
-		PsiReferenceExpression methodExpression = call.getMethodExpression();
-		String fullyQualifiedMethodName = methodExpression.getQualifiedName();
-		if (context.getEvaluator().isMemberInClass(method, "java.lang.Throwable")
-				|| context.getEvaluator().isMemberInSubClassOf(method, "java.lang.Throwable", false)
-				|| context.getEvaluator().isMemberInSubClassOf(method, "java.lang.Throwable", true)
-				|| fullyQualifiedMethodName.startsWith("java.lang.Throwable.printStackTrace")) {
-			context.report(ISSUE, call, context.getLocation(methodExpression), ISSUE.getBriefDescription(TextFormat.TEXT));
-		}
-	}
+    @Override
+    public void visitMethod(JavaContext context, JavaElementVisitor visitor,
+                            PsiMethodCallExpression call, PsiMethod method) {
+        PsiReferenceExpression methodExpression = call.getMethodExpression();
+        String fullyQualifiedMethodName = methodExpression.getQualifiedName();
+        if (context.getEvaluator().isMemberInClass(method, "java.lang.Throwable")
+                || context.getEvaluator().isMemberInSubClassOf(method, "java.lang.Throwable", false)
+                || context.getEvaluator().isMemberInSubClassOf(method, "java.lang.Throwable", true)
+                || fullyQualifiedMethodName.startsWith("java.lang.Throwable.printStackTrace")) {
+            context.report(ISSUE, call, context.getLocation(methodExpression), ISSUE.getBriefDescription(TextFormat.TEXT));
+        }
+    }
 }

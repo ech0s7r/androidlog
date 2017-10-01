@@ -57,9 +57,9 @@ public class Utils {
         double diagonalInches = Math.sqrt((widthInches * widthInches)
                 + (heightInches * heightInches));
 
-                Logger.w("Screen spec: " + log + getScreenSize(cx) + "/" + density
-                        + " inches: " + diagonalInches);
-        }
+        Logger.w("Screen spec: " + log + getScreenSize(cx) + "/" + density
+                + " inches: " + diagonalInches);
+    }
 
     private static String getScreenSize(Context cx) {
         Configuration config = cx.getResources().getConfiguration();
