@@ -1,5 +1,6 @@
 # Android Logger Library
 
+
 Logger library created for simple integration of logger capability to android applications providing APIs to write logs with different level of verbosity and avoiding to write boilerplate code like declaring TAG for each class or use static functions to get the logger instance every time as implemented in the most logger library on the market. This library makes the logger process simple to use, pretty and powerful. 
 
 The library is distributed as Android Studio project named *loggerlib* that depends on the module *lintrules*.
@@ -23,6 +24,45 @@ The order in terms of verbosity, from the least to the most is: ASSERT, ERROR, W
 - Customizable *Layout* and *Appenders*
 
 The library is fully thread-safe, it creates a separate process for the logger and communicate with it over AIDL, each library function returns immediately to the caller and the file writing process is managed in a separate process with a MIN PRIORITY daemon thread. 
+
+
+
+### Download
+
+Repository available on jCenter
+
+```
+implementation 'com.ech0s7r.android:loggerlib:1.1.8@aar'
+```
+
+If the dependency fails to resolve, add this to your project repositories 
+
+```
+repositories {
+    maven {
+        url  "https://dl.bintray.com/ech0s7r/Android-Lib"
+    }
+}
+```
+
+[Find me on Bintray](https://bintray.com/ech0s7r/Android-Lib/androidlog)
+
+
+### Enable it in gradle
+
+In your app module build.gradle, add the following:
+
+```groovy
+lintOptions {
+    checkReleaseBuilds true
+    abortOnError true
+    ignoreWarnings true
+    check 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
+    fatal 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
+    htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+    htmlReport true
+}
+```
 
 
 
@@ -102,6 +142,7 @@ try {
    Logger.e("description", e);
 }
 ```
+
 
 
 ### Compilation time check (Lint integration)
@@ -189,69 +230,3 @@ Each line has same number of elements comma separated, following elements are no
 14. Line number (Integer)
 15. Description(String)
 16. Stack Trace (String, optional) 
-
-
-
-
-### Download
-
-Repository available on jCenter
-
-```
-compile 'com.ech0s7r.android:loggerlib:1.0.0@aar'
-```
-
-If the dependency fails to resolve, add this to your project repositories 
-
-```
-repositories {
-    maven {
-        url  "https://dl.bintray.com/ech0s7r/Android-Lib"
-    }
-}
-```
-
-
-
-### Enable it in gradle
-
-In your app module build.gradle, add the following:
-
-```groovy
-lintOptions {
-    checkReleaseBuilds true
-    abortOnError true
-    ignoreWarnings true
-    check 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'NoBaseActivity', 'MissingSuperCall'
-        //enable 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector'
-    fatal 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'NoBaseActivity', 'MissingSuperCall'
-    htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
-    htmlReport true
-}
-
-// (Optional) Auto open the browser with lint report
-afterEvaluate {
-    applicationVariants.all {
-        variant ->
-			def variantName = variant.name.capitalize()
-			project.tasks["compile${variantName}Sources"].doLast {
-				project.tasks["lint${variantName}"].execute()
-			}
-			gradle.taskGraph.afterTask { t, state ->
-			if (t == project.tasks["compile${variantName}Sources"]) {
-				if (state.failure) {
-					task lintShowReport {
-						doLast {
-							//def reportPath = buildscript.sourceFile.getParent() + "\\build\\reports\\lint-results-${variant.name}.html"
-							def reportPath = buildscript.sourceFile.getParent() + "\\build\\reports\\lint\\lint-result.html"
-							java.awt.Desktop.desktop.browse file(reportPath).toURI()
-						}
-					}
-					lintShowReport.execute()
-				}
-			}
-		}
-	}
-}
-```
-
