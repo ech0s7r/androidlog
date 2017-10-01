@@ -76,13 +76,13 @@ public class Logger implements Cloneable {
 
     public static final long MAX_FILE_LINE = 0; // 0 to disable it
 
+    private static boolean sUseHandlerThread;
+
     private Handler mHandler;
     private HandlerThread mHandlerThread;
     private HandlerCallback mHandlerCallback;
 
     private static ExceptionHandler mExceptionHandler = new ExceptionHandler();
-
-    protected static boolean sUseHandlerThread;
 
     private Queue<LogMsg> localQueue;
 
