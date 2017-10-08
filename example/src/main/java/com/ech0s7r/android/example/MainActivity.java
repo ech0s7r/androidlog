@@ -39,12 +39,12 @@ public class MainActivity extends Activity {
         LoggerConfigurator.init(
                 Logger.Level.WARN,        /* Minimum level to log */
                 123,                      /* Application ID */
-                "AndroidLogApp",                  /* Application name */
+                "AndroidLogApp",          /* Application name */
                 BuildConfig.VERSION_NAME, /* Application version */
                 "123456789",              /* Device ID */
-                "AndroidLogApp.log");      /* File name prefix */
+                "AndroidLogApp.log");     /* File name prefix */
         LoggerConfigurator.addAppender(new LogcatAppender(new LogcatLayout()));
-        LoggerConfigurator.addAppender(new FileAppender(this, new CsvLayout()));
+        LoggerConfigurator.addAppender(new FileAppender(getApplicationContext(), new CsvLayout()));
     }
 
 }

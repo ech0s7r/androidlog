@@ -86,7 +86,7 @@ lintOptions {
 
    ```java
    LoggerConfigurator.addAppender(new LogcatAppender(new LogcatLayout()));
-   LoggerConfigurator.addAppender(new FileAppender(this, new CsvLayout()));
+   LoggerConfigurator.addAppender(new FileAppender(getApplicationContext(), new CsvLayout()));
    ```
 
    The supported appenders, for now, are writing on Logcat and writing on File with Csv layout and Logcat layout.
