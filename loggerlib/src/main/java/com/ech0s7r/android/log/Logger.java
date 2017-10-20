@@ -8,9 +8,6 @@ import android.os.Message;
 import com.ech0s7r.android.log.appender.LogAppender;
 import com.ech0s7r.android.log.layout.LogLayout;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 
 /**
  * @author marco.rocco
@@ -72,11 +69,9 @@ public class Logger implements Cloneable {
         private static Logger myInstance = new Logger();
     }
 
-    /*package*/static Level logLevel = Level.VERBOSE; // Default
+    /*package*/static Level logLevel = Level.INFO; // Default
 
     public static final long MAX_FILE_LINE = 0; // 0 to disable it
-
-    private static boolean sUseHandlerThread;
 
     private Handler mHandler;
     private HandlerThread mHandlerThread;
@@ -84,12 +79,11 @@ public class Logger implements Cloneable {
 
     private static ExceptionHandler mExceptionHandler = new ExceptionHandler();
 
-    private Queue<LogMsg> localQueue;
+    protected static boolean sUseHandlerThread;
 
 
     @SuppressLint({"AndroidLogDetector", "NoLoggedException"})
     private Logger() {
-        localQueue = new LinkedList<>();
         createThreadHandler();
     }
 
@@ -113,43 +107,24 @@ public class Logger implements Cloneable {
     @SuppressLint({"AndroidLogDetector"})
     private void sendWrite(LogMsg msg) {
         //long elapsed = SystemClock.elapsedRealtime();
-        if (LoggerConfigurator.isValid()) {
-            wipeQueue();
-            if (sUseHandlerThread && msg.level != Level.ASSERT) {
-                if (!mHandlerThread.isAlive()) {
-                    createThreadHandler();
-                }
-                mHandler.obtainMessage(0, msg).sendToTarget();
-            } else {
-                writeLog(msg);
+        if (sUseHandlerThread && msg.level != Level.ASSERT) {
+            if (!mHandlerThread.isAlive()) {
+                createThreadHandler();
             }
+            mHandler.obtainMessage(0, msg).sendToTarget();
         } else {
-            // config not valid or not init yet, enqueue in local
-            localQueue.add(msg);
+            writeLog(msg);
         }
         //Log.d(LoggerConfigurator.APP_NAME, "Logger.sendWrite time: " +
         //(SystemClock.elapsedRealtime() - elapsed) + " ms.");
     }
 
-    private void writeLog(LogMsg msg, LogAppender appender) {
-        LogLayout layout = appender.getLogLayout();
-        String str = layout.format(msg);
-        appender.writeLog(msg.level, str, msg.throwable);
-    }
-
     private void writeLog(LogMsg msg) {
         if (isLoggable(msg)) {
             for (LogAppender appender : LoggerConfigurator.getLogAppenderList()) {
-                writeLog(msg, appender);
-            }
-        }
-    }
-
-    private void wipeQueue() {
-        LogMsg msg;
-        if (localQueue.size() != 0) {
-            while ((msg = localQueue.poll()) != null) {
-                writeLog(msg);
+                LogLayout layout = appender.getLogLayout();
+                String str = layout.format(msg);
+                appender.writeLog(msg.level, str, msg.throwable);
             }
         }
     }
