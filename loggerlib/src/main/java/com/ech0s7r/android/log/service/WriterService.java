@@ -7,7 +7,6 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.ech0s7r.android.log.BuildConfig;
 import com.ech0s7r.android.log.Logger;
 
 import java.io.BufferedWriter;
@@ -91,16 +90,14 @@ public class WriterService extends Service {
     }
 
     @SuppressLint({"AndroidLogDetector"})
-    private static boolean createLogDir() {
-        boolean created = false;
+    private static void createLogDir() {
         String path = APP_DIR_PATH;
         if (!(new File(path).exists())) {
-            created = new File(path).mkdirs();
+            boolean created = new File(path).mkdirs();
             if (!created) {
-                Log.e(BuildConfig.APPLICATION_ID, "Impossible to create log file, path=" + path);
+                Log.e(APP_NAME, "Impossible to create log file, path=" + path);
             }
         }
-        return created;
     }
 
     private static String nextLogFileName() {
@@ -108,7 +105,6 @@ public class WriterService extends Service {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String date = sdf.format(new Date());
         File dir = new File(APP_DIR_PATH);
-        dir.mkdirs();
         if (dir.canRead() && dir.isDirectory()) {
             for (String file : dir.list()) {
                 if (file.contains(date)) {
@@ -135,14 +131,9 @@ public class WriterService extends Service {
                 + nextLogFileName();
         mCurrentFile = new File(logFilePath);
         synchronized (WriterService.class) {
-            try {
-                mWriter = new BufferedWriter(new FileWriter(new File(logFilePath),
-                        true));
-                return mWriter;
-            } catch (Exception e) {
-                Log.e(BuildConfig.APPLICATION_ID, "", e);
-                return null;
-            }
+            mWriter = new BufferedWriter(new FileWriter(new File(logFilePath),
+                    true));
+            return mWriter;
         }
     }
 
@@ -198,15 +189,13 @@ public class WriterService extends Service {
         super.onCreate();
         //Log.d(APP_NAME, "LogService onCreate()");
 
-        boolean created = createLogDir();
+        createLogDir();
 
-        if (created) {
-            mQueueStringLog = new LinkedBlockingQueue<String>();
-            mWriterThread = new WriterThread();
-            mWriterThread.setPriority(Thread.MIN_PRIORITY);
-            mWriterThread.setDaemon(true);
-            mWriterThread.start();
-        }
+        mQueueStringLog = new LinkedBlockingQueue<String>();
+        mWriterThread = new WriterThread();
+        mWriterThread.setPriority(Thread.MIN_PRIORITY);
+        mWriterThread.setDaemon(true);
+        mWriterThread.start();
     }
 
     @Override
@@ -226,17 +215,13 @@ public class WriterService extends Service {
 
         @Override
         public void addInQueue(String msg) throws RemoteException {
-            if (mQueueStringLog != null) {
-                mQueueStringLog.add(msg);
-            }
+            mQueueStringLog.add(msg);
         }
 
         @Override
         @SuppressLint({"NoLoggedException", "AndroidLogDetector"})
         public void stop() throws RemoteException {
-            if (mWriter != null) {
-                closeWriter(mWriter);
-            }
+            closeWriter(mWriter);
             try {
                 stopSelf();
             } catch (Throwable t) {

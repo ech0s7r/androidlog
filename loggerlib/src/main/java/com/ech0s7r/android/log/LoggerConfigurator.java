@@ -65,8 +65,4 @@ public class LoggerConfigurator {
         return mLogAppenderList;
     }
 
-    static boolean isValid() {
-        return APP_NAME != null;
-    }
-
 }
