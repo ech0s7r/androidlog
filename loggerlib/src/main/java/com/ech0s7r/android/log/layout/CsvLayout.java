@@ -1,9 +1,9 @@
 package com.ech0s7r.android.log.layout;
 
 import android.os.Build;
-import android.util.Log;
 
 import com.ech0s7r.android.log.LogMsg;
+import com.ech0s7r.android.log.utils.Utils;
 
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -24,7 +24,7 @@ public class CsvLayout extends LogLayout {
     public String format(LogMsg msg) {
         String str = String.format(Locale.ENGLISH, "%s,%s,%s,%d,%s,%s,%s,%d,%d,%d,%s,%s,%s,%d,\"%s\",\"%s\"",
                 /* 1 date*/msg.getTimeStamp(),
-				/* 2 log level*/msg.level,
+                /* 2 log level*/msg.level,
 				/* 3 Version*/VERSION_NAME,
 				/* 4 Company id*/APP_ID,
 				/* 5 Device code*/DEVICE_ID,
@@ -64,7 +64,7 @@ public class CsvLayout extends LogLayout {
 
 
     private String stackOneLine(Throwable t) {
-        return oneLine(Log.getStackTraceString(t), ";");
+        return oneLine(Utils.getStackTraceString(t), ";");
     }
 
     private String oneLine(String msg, String separator) {

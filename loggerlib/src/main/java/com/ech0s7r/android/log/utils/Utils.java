@@ -1,11 +1,15 @@
 package com.ech0s7r.android.log.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.DisplayMetrics;
 
 import com.ech0s7r.android.log.Logger;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * @author marco.rocco
@@ -79,4 +83,21 @@ public class Utils {
         return "SCREENLAYOUT_SIZE_UNDEFINED";
     }
 
+    /**
+     * Handy function to get a loggable stack trace from a Throwable
+     *
+     * @param tr An exception to log
+     */
+    @SuppressLint("PrintStackTraceDetector")
+    public static String getStackTraceString(Throwable tr) {
+        if (tr == null) {
+            return "";
+        }
+
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new FastPrintWriter(sw, false, 256);
+        tr.printStackTrace(pw);
+        pw.flush();
+        return sw.toString();
+    }
 }
