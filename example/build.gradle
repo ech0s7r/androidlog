@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 android {
+
     compileSdkVersion 20
     buildToolsVersion '26.0.2'
-
 
     defaultConfig {
         applicationId "com.ech0s7r.android.example"
@@ -19,18 +19,20 @@ android {
         }
     }
 
-   lintOptions {
+    lintOptions {
+        textReport true
+        textOutput 'stdout'
         checkReleaseBuilds true
         abortOnError true
         ignoreWarnings true
-        check 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'NoBaseActivity', 'MissingSuperCall'
+        check 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
         //enable 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector'
-        fatal 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'NoBaseActivity', 'MissingSuperCall'
+        fatal 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
         htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
         htmlReport true
     }
-
 }
 dependencies {
-    implementation project(':loggerlib')
+    //implementation project(':loggerlib')
+    implementation 'com.ech0s7r.android:loggerlib:1.2.0@aar'
 }

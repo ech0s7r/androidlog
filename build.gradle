@@ -1,8 +1,8 @@
 buildscript {
 
     ext {
-        gradlePluginVersion = '3.0.0-rc1'
-        lintVersion = '26.0.0-beta6'
+        gradlePluginVersion = '3.0.0-rc2'
+        lintVersion = '26.0.0-rc2'
     }
 
     repositories {
@@ -20,6 +20,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url 'https://dl.bintray.com/ech0s7r/Android-Lib'
+        }
     }
 }
 
