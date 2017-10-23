@@ -54,6 +54,8 @@ In your app module build.gradle, add the following:
 
 ```groovy
 lintOptions {
+    textReport true
+    textOutput 'stdout'
     checkReleaseBuilds true
     abortOnError true
     ignoreWarnings true
