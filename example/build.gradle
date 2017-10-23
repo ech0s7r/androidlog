@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 android {
 
-    compileSdkVersion 20
+    compileSdkVersion 26
     buildToolsVersion '26.0.2'
 
     defaultConfig {
@@ -33,6 +33,6 @@ android {
     }
 }
 dependencies {
-    //implementation project(':loggerlib')
-    implementation 'com.ech0s7r.android:loggerlib:1.2.0@aar'
+    implementation project(':loggerlib')
+    //implementation 'com.ech0s7r.android:loggerlib:1.2.0@aar'
 }
