@@ -32,7 +32,7 @@ The library is fully thread-safe, it creates a separate process for the logger a
 Repository available on jCenter
 
 ```
-implementation 'com.ech0s7r.android:loggerlib:1.1.8@aar'
+implementation 'com.ech0s7r.android:loggerlib:1.2.2@aar'
 ```
 
 If the dependency fails to resolve, add this to your project repositories 
@@ -54,6 +54,8 @@ In your app module build.gradle, add the following:
 
 ```groovy
 lintOptions {
+    textReport true
+    textOutput 'stdout'
     checkReleaseBuilds true
     abortOnError true
     ignoreWarnings true
@@ -79,7 +81,7 @@ lintOptions {
          "MyApp",                  /* Application name */
          BuildConfig.VERSION_NAME, /* Application version */
          getDeviceId(),            /* Device ID */
-         "MyAppAndroid.log");             /* File name prefix */
+         "MyAppAndroid.log");      /* File name prefix */
    ```
 
 3. Add *Layouts* with *Appenders*
