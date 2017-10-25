@@ -34,5 +34,5 @@ android {
 }
 dependencies {
     //implementation project(':loggerlib')
-    implementation 'com.ech0s7r.android:loggerlib:1.2.0@aar'
+    implementation 'com.ech0s7r.android:loggerlib:1.2.2@aar'
 }
