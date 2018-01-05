@@ -1,5 +1,6 @@
 package com.ech0s7r.android.lintrules;
 
+import com.android.tools.lint.client.api.UElementHandler;
 import com.android.tools.lint.detector.api.Category;
 import com.android.tools.lint.detector.api.Detector;
 import com.android.tools.lint.detector.api.Implementation;
@@ -8,12 +9,13 @@ import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
 import com.android.tools.lint.detector.api.Severity;
 import com.android.tools.lint.detector.api.TextFormat;
-import com.google.common.collect.ImmutableList;
-import com.intellij.psi.JavaElementVisitor;
-import com.intellij.psi.PsiCatchSection;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiStatement;
 
+import org.jetbrains.uast.UCallExpression;
+import org.jetbrains.uast.UCatchClause;
+import org.jetbrains.uast.UElement;
+import org.jetbrains.uast.visitor.AbstractUastVisitor;
+
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,10 +24,10 @@ import java.util.List;
  *
  * @author marco.rocco
  */
+@SuppressWarnings("unused")
+public class NoLoggedException extends Detector implements Detector.UastScanner {
 
-public class NoLoggedException extends Detector implements Detector.JavaPsiScanner {
-
-    public static final Issue ISSUE = Issue.create(
+    static final Issue ISSUE = Issue.create(
             "NoLoggedException",
             "Exception not logged",
             "You should log the Exception",
@@ -34,56 +36,49 @@ public class NoLoggedException extends Detector implements Detector.JavaPsiScann
             Severity.FATAL,
             new Implementation(NoLoggedException.class, Scope.JAVA_FILE_SCOPE));
 
+    private static final String LOGGER_LIB = "com.ech0s7r.android.log.Logger";
+
     @Override
-    public List<Class<? extends PsiElement>> getApplicablePsiTypes() {
-        return ImmutableList.of(PsiCatchSection.class);
+    public List<Class<? extends UElement>> getApplicableUastTypes() {
+        return Collections.<Class<? extends UElement>>singletonList(UCatchClause.class);
     }
 
     @Override
-    public JavaElementVisitor createPsiVisitor(JavaContext context) {
-        return new NoLoggedExceptionChecker(context);
+    public UElementHandler createUastHandler(JavaContext context) {
+        return new UastHandler(context);
     }
 
-    private static class NoLoggedExceptionChecker extends JavaElementVisitor {
-        private final JavaContext mContext;
+    private class UastHandler extends UElementHandler {
 
-        public NoLoggedExceptionChecker(JavaContext context) {
-            this.mContext = context;
+        private JavaContext mContext;
+        private boolean mIsValid;
+
+        UastHandler(JavaContext context) {
+            mContext = context;
         }
 
         @Override
-        public void visitCatchSection(PsiCatchSection section) {
-            boolean valid = false;
-            String exceptionParamName = section.getParameter().getName();
-//			LintLog.log("visiting catch section text=[" + section.getText() + "] parameter: " + exceptionParamName);
-//			LintLog.log("statements in catchblock: ");
-            for (PsiStatement statement : section.getCatchBlock().getStatements()) {
-//				LintLog.log("\tstatement=[" + statement + "]");
-                if (statement != null && statement.getText() != null &&
-                        statement.getText().contains("Logger")) {
-                    String text = statement.getText();
-                    text = text.replaceAll("\\s+", "");
-                    if (text.contains("(" + exceptionParamName + ")")) {
-                        valid = true;
+        public void visitCatchClause(final UCatchClause section) {
+            section.accept(new AbstractUastVisitor() {
+                @Override
+                public boolean visitElement(UElement node) {
+                    if (node instanceof UCallExpression) {
+                        if (mContext.getEvaluator().isMemberInClass(((UCallExpression) node).resolve(), LOGGER_LIB)) {
+                            mIsValid = true;
+                        }
                     }
-                    if (text.contains("," + exceptionParamName)) {
-                        valid = true;
-                    }
-                    if (text.contains("+" + exceptionParamName + ",") || text.contains("+" + exceptionParamName + ")")) {
-                        valid = true;
-                    }
-                    if (text.contains(exceptionParamName + ".")) {
-                        valid = true;
+                    return super.visitElement(node);
+                }
+
+                @Override
+                public void afterVisitCatchClause(UCatchClause node) {
+                    if (!mIsValid) {
+                        mContext.report(ISSUE, section, mContext.getLocation(section), ISSUE.getBriefDescription(TextFormat.TEXT));
                     }
                 }
-            }
-//			LintLog.log("\n\n");
-
-            if (!valid) {
-                // show error
-                mContext.report(ISSUE, section, mContext.getLocation(section), ISSUE.getBriefDescription(TextFormat.TEXT));
-            }
+            });
         }
-
     }
+
 }
+

@@ -18,8 +18,9 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
+        mavenCentral()
         jcenter()
+        google()
         maven {
             url 'https://dl.bintray.com/ech0s7r/Android-Lib'
         }

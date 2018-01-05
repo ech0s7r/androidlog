@@ -8,12 +8,11 @@ import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
 import com.android.tools.lint.detector.api.Severity;
 import com.android.tools.lint.detector.api.TextFormat;
-import com.intellij.psi.JavaElementVisitor;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiMethodCallExpression;
-import com.intellij.psi.PsiReferenceExpression;
 
-import java.util.Arrays;
+import org.jetbrains.uast.UCallExpression;
+
+import java.util.Collections;
 import java.util.List;
 
 
@@ -21,32 +20,33 @@ import java.util.List;
  * @author marco.rocco
  */
 @SuppressWarnings("unused")
-public final class PrintStackTraceDetector extends Detector implements Detector.JavaPsiScanner {
+public final class PrintStackTraceDetector extends Detector implements Detector.UastScanner {
 
-    public static final Issue ISSUE = Issue.create(
+    static final Issue ISSUE = Issue.create(
             "PrintStackTraceDetector",
             "Do not use printStackTrace",
-            "Instead of printStackTrace, use RiM Logger library",
+            "Instead of printStackTrace, use right Logger library",
             Category.CORRECTNESS,
             8,
             Severity.FATAL,
             new Implementation(PrintStackTraceDetector.class, Scope.JAVA_FILE_SCOPE));
 
+    private static final String THROWABLE = "java.lang.Throwable";
+    private static final String PRINT_STACK_TRACE = "java.lang.Throwable.printStackTrace";
+
     @Override
     public List<String> getApplicableMethodNames() {
-        return Arrays.asList("printStackTrace");
+        return Collections.singletonList("printStackTrace");
     }
 
     @Override
-    public void visitMethod(JavaContext context, JavaElementVisitor visitor,
-                            PsiMethodCallExpression call, PsiMethod method) {
-        PsiReferenceExpression methodExpression = call.getMethodExpression();
-        String fullyQualifiedMethodName = methodExpression.getQualifiedName();
-        if (context.getEvaluator().isMemberInClass(method, "java.lang.Throwable")
-                || context.getEvaluator().isMemberInSubClassOf(method, "java.lang.Throwable", false)
-                || context.getEvaluator().isMemberInSubClassOf(method, "java.lang.Throwable", true)
-                || fullyQualifiedMethodName.startsWith("java.lang.Throwable.printStackTrace")) {
-            context.report(ISSUE, call, context.getLocation(methodExpression), ISSUE.getBriefDescription(TextFormat.TEXT));
+    public void visitMethod(JavaContext context, UCallExpression call, PsiMethod method) {
+        String fullyQualifiedMethodName = call.getMethodName();
+        if (context.getEvaluator().isMemberInClass(method, THROWABLE)
+                || context.getEvaluator().isMemberInSubClassOf(method, THROWABLE, false)
+                || context.getEvaluator().isMemberInSubClassOf(method, THROWABLE, true)
+                || (fullyQualifiedMethodName != null && fullyQualifiedMethodName.startsWith(PRINT_STACK_TRACE))) {
+            context.report(ISSUE, call, context.getLocation(call), ISSUE.getBriefDescription(TextFormat.TEXT));
         }
     }
 }

@@ -75,7 +75,7 @@ public class LogMsg {
     }
 
 
-    LogMsg() {
+    private LogMsg() {
         mProcessId = android.os.Process.myPid();
         mThreadId = Thread.currentThread().getId();
         mTrace = Thread.currentThread().getStackTrace();

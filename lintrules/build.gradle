@@ -1,9 +1,8 @@
 apply plugin: 'java-library'
 
+targetCompatibility = JavaVersion.VERSION_1_7
+sourceCompatibility = JavaVersion.VERSION_1_7
 
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     compileOnly "com.android.tools.lint:lint-api:$lintVersion"
@@ -11,15 +10,11 @@ dependencies {
 
     testImplementation "com.android.tools.lint:lint:$lintVersion"
     testImplementation "com.android.tools.lint:lint-tests:$lintVersion"
-    testImplementation "com.android.tools:testutils:$lintVersion"
+//    testImplementation "com.android.tools:testutils:$lintVersion"
 }
 
 jar {
     manifest {
-        //attributes("Lint-Registry": "com.ech0s7r.android.lintrules.LintRegistry")
-        // Only use the "-v2" key here if your checks have been updated to the
-        // new 3.0 APIs (including UAST)
         attributes("Lint-Registry-v2": "com.ech0s7r.android.lintrules.LintRegistry")
-        //attributes("Lint-Registry": "com.ech0s7r.android.lintrules.LintRegistry")
     }
 }
