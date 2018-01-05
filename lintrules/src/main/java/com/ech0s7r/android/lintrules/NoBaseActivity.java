@@ -8,12 +8,14 @@ import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
 import com.android.tools.lint.detector.api.Severity;
 import com.android.tools.lint.detector.api.TextFormat;
-import com.google.common.collect.ImmutableList;
 import com.intellij.psi.JavaElementVisitor;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
-import com.intellij.psi.PsiElement;
 
+import org.jetbrains.uast.UClass;
+import org.jetbrains.uast.UElement;
+
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,10 +24,10 @@ import java.util.List;
  *
  * @author marco.rocco
  */
+@SuppressWarnings("unused")
+public class NoBaseActivity extends Detector implements Detector.UastScanner {
 
-public class NoBaseActivity extends Detector implements Detector.JavaPsiScanner {
-
-    public static final Issue ISSUE = Issue.create(
+    static final Issue ISSUE = Issue.create(
             "NoBaseActivity",
             "No BaseActivity extension",
             "You should extend BaseActivity",
@@ -35,8 +37,8 @@ public class NoBaseActivity extends Detector implements Detector.JavaPsiScanner 
             new Implementation(NoBaseActivity.class, Scope.JAVA_FILE_SCOPE));
 
     @Override
-    public List<Class<? extends PsiElement>> getApplicablePsiTypes() {
-        return ImmutableList.of(PsiClass.class);
+    public List<Class<? extends UElement>> getApplicableUastTypes() {
+        return Collections.<Class<? extends UElement>>singletonList(UClass.class);
     }
 
     @Override
@@ -47,17 +49,17 @@ public class NoBaseActivity extends Detector implements Detector.JavaPsiScanner 
     private static class NoBaseActivityChecker extends JavaElementVisitor {
         private final JavaContext mContext;
 
-        public NoBaseActivityChecker(JavaContext context) {
+        NoBaseActivityChecker(JavaContext context) {
             this.mContext = context;
         }
 
         @Override
         public void visitClass(PsiClass aClass) {
             super.visitClass(aClass);
-            if (aClass != null && aClass.getQualifiedName() != null && aClass.getExtendsListTypes() != null) {
+            if (aClass != null && aClass.getQualifiedName() != null) {
                 boolean valid = true;
                 for (PsiClassType c : aClass.getExtendsListTypes()) {
-                    if (c != null && c.getCanonicalText() != null) {
+                    if (c != null) {
                         if (c.getCanonicalText().contains("android.app.Activity")
                                 || c.getCanonicalText().contains("android.support.v4.app.FragmentActivity")
                                 || c.getCanonicalText().contains("android.app.ListActivity"))

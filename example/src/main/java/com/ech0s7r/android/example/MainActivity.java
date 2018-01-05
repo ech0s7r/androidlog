@@ -28,11 +28,19 @@ public class MainActivity extends Activity {
         for (int i = 0; i < 5; i++)
             Logger.i("Test log");
 
+        //System.out.println("ciao");
+
         try {
             throw new Exception("TestException");
         } catch (Exception e) {
-
+            //e.printStackTrace();
+            Logger.i("");
+        } catch (Throwable t) {
+            test1();
+            test2();
+            Logger.i("ok");
         }
+        //Log.w("fail", "fail lint");
     }
 
     private void initLog() {
@@ -45,6 +53,12 @@ public class MainActivity extends Activity {
                 "AndroidLogApp.log");     /* File name prefix */
         LoggerConfigurator.addAppender(new LogcatAppender(new LogcatLayout()));
         LoggerConfigurator.addAppender(new FileAppender(getApplicationContext(), new CsvLayout()));
+    }
+
+    private void test1() {
+    }
+
+    private void test2() {
     }
 
 }

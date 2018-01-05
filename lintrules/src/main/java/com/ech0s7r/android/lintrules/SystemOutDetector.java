@@ -1,5 +1,6 @@
 package com.ech0s7r.android.lintrules;
 
+import com.android.tools.lint.client.api.JavaEvaluator;
 import com.android.tools.lint.detector.api.Category;
 import com.android.tools.lint.detector.api.Detector;
 import com.android.tools.lint.detector.api.Implementation;
@@ -8,10 +9,10 @@ import com.android.tools.lint.detector.api.JavaContext;
 import com.android.tools.lint.detector.api.Scope;
 import com.android.tools.lint.detector.api.Severity;
 import com.android.tools.lint.detector.api.TextFormat;
-import com.intellij.psi.JavaElementVisitor;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiMethodCallExpression;
-import com.intellij.psi.PsiReferenceExpression;
+
+import org.jetbrains.uast.UCallExpression;
+import org.jetbrains.uast.java.JavaUQualifiedReferenceExpression;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,12 +22,12 @@ import java.util.List;
  * @author marco.rocco
  */
 @SuppressWarnings("unused")
-public final class SystemOutDetector extends Detector implements Detector.JavaPsiScanner {
+public final class SystemOutDetector extends Detector implements Detector.UastScanner {
 
-    public static final Issue ISSUE = Issue.create(
+    static final Issue ISSUE = Issue.create(
             "SystemOutDetector",
             "Use of java.lang.System",
-            "Instead of java.lang.System*, use RiM Logger library",
+            "Instead of java.lang.System*, use the right Logger library",
             Category.CORRECTNESS,
             8,
             Severity.FATAL,
@@ -39,14 +40,14 @@ public final class SystemOutDetector extends Detector implements Detector.JavaPs
     }
 
     @Override
-    public void visitMethod(JavaContext context, JavaElementVisitor visitor,
-                            PsiMethodCallExpression call, PsiMethod method) {
-        PsiReferenceExpression methodExpression = call.getMethodExpression();
-        String fullyQualifiedMethodName = methodExpression.getQualifiedName();
-//		log("fullyQualifiedMethodName=[" + fullyQualifiedMethodName + "]" + " " + call + " " + method);
-//		log(method.getClass().getSimpleName());
-        if (fullyQualifiedMethodName.contains("System.out.print") || fullyQualifiedMethodName.contains("System.err.print")) {
-            context.report(ISSUE, call, context.getLocation(methodExpression), ISSUE.getBriefDescription(TextFormat.TEXT));
+    public void visitMethod(JavaContext context, UCallExpression call, PsiMethod method) {
+        JavaEvaluator evaluator = context.getEvaluator();
+        JavaUQualifiedReferenceExpression expr = (JavaUQualifiedReferenceExpression) call.getReceiver();
+        if (expr != null) {
+            String name = expr.asRenderString();
+            if (evaluator.isMemberInClass(method, "java.io.PrintStream") || name.contains("System.out") || name.contains("System.err")) {
+                context.report(ISSUE, call, context.getLocation(call), ISSUE.getBriefDescription(TextFormat.TEXT));
+            }
         }
     }
 

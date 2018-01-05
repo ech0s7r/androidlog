@@ -39,7 +39,7 @@ public class LoggerConfigurator {
      * @param deviceId      Device ID
      * @param logNamePrefix Log name prefix used for the log file, if null appName will be used
      */
-    public static final void init(Logger.Level logLevel, int id, String appName, String versionName, String deviceId, String logNamePrefix) {
+    public static void init(Logger.Level logLevel, int id, String appName, String versionName, String deviceId, String logNamePrefix) {
         APP_ID = id;
         APP_NAME = appName;
         DEVICE_ID = deviceId;

@@ -4,6 +4,11 @@ android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
     defaultConfig {
         applicationId "com.ech0s7r.android.example"
         minSdkVersion 14
@@ -19,20 +24,26 @@ android {
         }
     }
 
+
     lintOptions {
         textReport true
         textOutput 'stdout'
-        checkReleaseBuilds true
-        abortOnError true
-        ignoreWarnings true
-        check 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
-        //enable 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector'
-        fatal 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
-        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
-        htmlReport true
     }
+
+//    lintOptions {
+//        textReport true
+//        textOutput 'stdout'
+//        checkReleaseBuilds true
+//        abortOnError true
+//        ignoreWarnings true
+//        check 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
+//        //enable 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector'
+//        fatal 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
+//        htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
+//        htmlReport true
+//    }
 }
 dependencies {
-    //implementation project(':loggerlib')
-    implementation 'com.ech0s7r.android:loggerlib:1.2.2@aar'
+    implementation project(':loggerlib')
+    //implementation 'com.ech0s7r.android:loggerlib:1.2.3@aar'
 }
