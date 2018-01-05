@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 
-def libVersion = '1.2.3'
+def libVersion = '1.2.4'
 
 version = libVersion
 ext {
