@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 android {
 
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -12,7 +13,7 @@ android {
     defaultConfig {
         applicationId "com.ech0s7r.android.example"
         minSdkVersion 14
-        targetSdkVersion 20
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -28,6 +29,8 @@ android {
     lintOptions {
         textReport true
         textOutput 'stdout'
+
+        disable 'GoogleAppIndexingWarning', 'AllowBackup'
     }
 
 //    lintOptions {
@@ -45,5 +48,10 @@ android {
 }
 dependencies {
     implementation project(':loggerlib')
-    //implementation 'com.ech0s7r.android:loggerlib:1.2.3@aar'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    implementation 'com.ech0s7r.android:loggerlib:1.2.3@aar'
+}
+
+repositories {
+    mavenCentral()
 }

@@ -2,6 +2,7 @@ package com.ech0s7r.android.example;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.ech0s7r.android.log.Logger;
 import com.ech0s7r.android.log.LoggerConfigurator;
@@ -40,7 +41,8 @@ public class MainActivity extends Activity {
             test2();
             Logger.i("ok");
         }
-        //Log.w("fail", "fail lint");
+
+        //Log.w("TAG", "lint check should fail here!");
     }
 
     private void initLog() {

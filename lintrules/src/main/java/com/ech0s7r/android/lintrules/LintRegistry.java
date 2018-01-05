@@ -1,6 +1,7 @@
 package com.ech0s7r.android.lintrules;
 
 import com.android.tools.lint.client.api.IssueRegistry;
+import com.android.tools.lint.detector.api.ApiKt;
 import com.android.tools.lint.detector.api.Issue;
 import com.google.common.collect.ImmutableList;
 
@@ -20,5 +21,10 @@ public class LintRegistry extends IssueRegistry {
                 NoLoggedException.ISSUE
                 //NoBaseActivity.ISSUE
         );
+    }
+
+    @Override
+    public int getApi() {
+        return ApiKt.CURRENT_API;
     }
 }
