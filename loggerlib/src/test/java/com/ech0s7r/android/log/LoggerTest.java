@@ -96,4 +96,14 @@ public class LoggerTest {
         Assert.assertTrue(LogTestUtils.getLastLogMsg().contains(uncaughtExceptionString));
     }
 
+    @Test
+    public void testLogcatLayout() {
+        LogcatLayout layout = new LogcatLayout();
+        String out = layout.format(new LogMsg(Logger.Level.WARN, TEST_V));
+        Assert.assertTrue(out.startsWith("" + Thread.currentThread().getId()));
+        Assert.assertTrue(out.contains(TEST_V));
+        Assert.assertEquals(0, LogTestUtils.logSize());
+        expectedSize++;
+    }
+
 }
