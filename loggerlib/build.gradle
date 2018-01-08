@@ -46,6 +46,18 @@ android {
 
 
 dependencies {
+    /* Testing jUnit4 */
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.robolectric:robolectric:3.5'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+
+    /* Espresso */
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    /* Mockito */
+    testCompile "org.mockito:mockito-core:2.8.9"
+    testCompile "org.mockito:mockito-inline:2.8.9"
+
     lintChecks project(':lintrules')
 }
 

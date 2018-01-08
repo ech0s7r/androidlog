@@ -51,7 +51,9 @@ public class Logger implements Cloneable {
             Logger.e("uncaught exception !!!");
             Logger.e(ex);
 
-            defaultUEH.uncaughtException(thread, ex);
+            if (defaultUEH != null) {
+                defaultUEH.uncaughtException(thread, ex);
+            }
         }
     }
 
