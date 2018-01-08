@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -102,7 +103,7 @@ public class WriterService extends Service {
 
     private static String nextLogFileName() {
         String fileName = null;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.US);
         String date = sdf.format(new Date());
         File dir = new File(APP_DIR_PATH);
         if (dir.canRead() && dir.isDirectory()) {
