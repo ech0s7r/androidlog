@@ -30,7 +30,7 @@ public class LoggerConfigurator {
     }
 
     /**
-     * Init the Logger library
+     * Init the Logger library with custom device id
      *
      * @param logLevel      log level
      * @param id            Application ID
@@ -48,6 +48,18 @@ public class LoggerConfigurator {
         APP_DIR_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "logs" + "/" + APP_NAME;
 
         Logger.logLevel = logLevel;
+    }
+
+    /**
+     * Init the Logger library
+     *
+     * @param logLevel      log level
+     * @param appName       Application Name
+     * @param versionName   Application Version
+     * @param logNamePrefix Log name prefix used for the log file, if null appName will be used
+     */
+    public static void init(Logger.Level logLevel, String appName, String versionName, String logNamePrefix) {
+        init(logLevel, 0, appName, versionName, "", logNamePrefix);
     }
 
     /**
