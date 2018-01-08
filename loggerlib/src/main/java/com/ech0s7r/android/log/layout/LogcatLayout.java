@@ -4,7 +4,7 @@ import com.ech0s7r.android.log.LogMsg;
 import com.ech0s7r.android.log.utils.Utils;
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 public class LogcatLayout extends LogLayout {
 

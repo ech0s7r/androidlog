@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 class KotlinActivity : Activity() {
 

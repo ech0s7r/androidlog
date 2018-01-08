@@ -22,7 +22,7 @@ import java.util.List;
  * Lint rule: No Logged exception detector
  * <p>
  *
- * @author marco.rocco
+ * @author ech0s7r
  */
 @SuppressWarnings("unused")
 public class NoLoggedException extends Detector implements Detector.UastScanner {

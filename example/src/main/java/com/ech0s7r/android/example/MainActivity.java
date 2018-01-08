@@ -2,7 +2,6 @@ package com.ech0s7r.android.example;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.ech0s7r.android.log.Logger;
 import com.ech0s7r.android.log.LoggerConfigurator;

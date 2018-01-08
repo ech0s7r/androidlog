@@ -11,7 +11,7 @@ import static com.ech0s7r.android.log.LoggerConfigurator.APP_NAME;
 /**
  * Logger Logcat appender
  *
- * @author marco.rocco
+ * @author ech0s7r
  */
 @SuppressWarnings("unused")
 public class LogcatAppender extends LogAppender {

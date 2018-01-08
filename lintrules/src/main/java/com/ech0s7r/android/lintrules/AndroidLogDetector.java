@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Lint rule: Android log detector
  *
- * @author marco.rocco
+ * @author ech0s7r
  */
 @SuppressWarnings("unused")
 public class AndroidLogDetector extends Detector implements Detector.UastScanner {

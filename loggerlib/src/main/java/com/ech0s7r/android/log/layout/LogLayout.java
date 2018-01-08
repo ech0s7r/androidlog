@@ -3,7 +3,7 @@ package com.ech0s7r.android.log.layout;
 import com.ech0s7r.android.log.LogMsg;
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 public abstract class LogLayout {
 

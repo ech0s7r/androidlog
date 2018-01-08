@@ -22,7 +22,7 @@ import static com.ech0s7r.android.log.LoggerConfigurator.APP_NAME;
 /**
  * Log File Appender
  *
- * @author marco.rocco
+ * @author ech0s7r
  */
 @SuppressWarnings("unused")
 public class FileAppender extends LogAppender {

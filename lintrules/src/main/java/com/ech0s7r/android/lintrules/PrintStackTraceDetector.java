@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 @SuppressWarnings("unused")
 public final class PrintStackTraceDetector extends Detector implements Detector.UastScanner {

@@ -25,7 +25,7 @@ import static com.ech0s7r.android.log.LoggerConfigurator.LOG_FILE_NAME_PREFIX;
 
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 public class WriterService extends Service {
 

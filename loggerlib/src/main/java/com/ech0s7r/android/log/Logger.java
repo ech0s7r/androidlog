@@ -10,7 +10,7 @@ import com.ech0s7r.android.log.layout.LogLayout;
 
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 @SuppressWarnings("unused")
 public class Logger implements Cloneable {

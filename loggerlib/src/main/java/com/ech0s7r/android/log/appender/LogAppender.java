@@ -7,7 +7,7 @@ import com.ech0s7r.android.log.layout.LogLayout;
 /**
  * Abstract LogAppender
  *
- * @author marco.rocco
+ * @author ech0s7r
  */
 
 public abstract class LogAppender {

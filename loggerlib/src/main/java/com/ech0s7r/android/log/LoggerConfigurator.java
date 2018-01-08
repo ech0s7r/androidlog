@@ -7,7 +7,7 @@ import com.ech0s7r.android.log.appender.LogAppender;
 import java.util.ArrayList;
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 
 public class LoggerConfigurator {

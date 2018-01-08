@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 
 public class Utils {

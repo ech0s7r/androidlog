@@ -1,7 +1,7 @@
 package com.ech0s7r.android.lintrules;
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 @SuppressWarnings("unused")
 class LintLog {

@@ -6,7 +6,7 @@ import android.os.SystemClock;
 import java.util.Calendar;
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 public class LogMsg {
 

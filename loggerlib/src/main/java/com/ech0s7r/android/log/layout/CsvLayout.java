@@ -13,7 +13,7 @@ import static com.ech0s7r.android.log.LoggerConfigurator.DEVICE_ID;
 import static com.ech0s7r.android.log.LoggerConfigurator.VERSION_NAME;
 
 /**
- * @author marco.rocco
+ * @author ech0s7r
  */
 @SuppressWarnings("unused")
 public class CsvLayout extends LogLayout {
