@@ -48,25 +48,24 @@ repositories {
 [Find me on Bintray](https://bintray.com/ech0s7r/Android-Lib/androidlog)
 
 
-### Enable it in gradle
+### *[Optional] Enable text report*
 
-In your app module build.gradle, add the following:
+If you wish to enable the text report, add the following in your app module build.gradle:
 
 ```groovy
 lintOptions {
     textReport true
     textOutput 'stdout'
-    checkReleaseBuilds true
+}
+```
+<!--checkReleaseBuilds true
     abortOnError true
     ignoreWarnings true
     check 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
     fatal 'AndroidLogDetector', 'SystemOutDetector', 'PrintStackTraceDetector', 'NoLoggedException', 'MissingSuperCall'
     htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
     htmlReport true
-}
-```
-
-
+-->
 
 ### Setting up
 
@@ -211,7 +210,7 @@ If the application name is MyApp and the file prefix is MyAppAndroid.log, the ge
 ![file_example](file_example.PNG)
 
 
-
+<!--
 ##### **The CSV layout used is the following:**
 
 Each line has same number of elements comma separated, following elements are now supported and logged:
@@ -232,3 +231,4 @@ Each line has same number of elements comma separated, following elements are no
 14. Line number (Integer)
 15. Description(String)
 16. Stack Trace (String, optional) 
+-->
