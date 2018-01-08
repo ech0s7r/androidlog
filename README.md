@@ -1,5 +1,5 @@
 # Android Logger Library
-[ ![Download](https://api.bintray.com/packages/ech0s7r/Android-Lib/androidlog/images/download.svg?version=1.2.5) ](https://bintray.com/ech0s7r/Android-Lib/androidlog/1.2.5/link)
+[ ![Download](https://api.bintray.com/packages/ech0s7r/Android-Lib/androidlog/images/download.svg?version=1.2.6) ](https://bintray.com/ech0s7r/Android-Lib/androidlog/1.2.6/link)
 
 Logger library created for simple integration of logger capability to android applications providing APIs to write logs with different level of verbosity and avoiding to write boilerplate code like declaring TAG for each class or use static functions to get the logger instance every time as implemented in the most logger library on the market. This library makes the logger process simple to use, pretty and powerful. 
 
@@ -32,7 +32,7 @@ The library is fully thread-safe, it creates a separate process for the logger a
 Repository available on jCenter
 
 ```
-implementation 'com.ech0s7r.android:loggerlib:1.2.2@aar'
+implementation 'com.ech0s7r.android:loggerlib:1.2.6@aar'
 ```
 
 If the dependency fails to resolve, add this to your project repositories 
