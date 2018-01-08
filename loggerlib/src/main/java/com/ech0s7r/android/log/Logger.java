@@ -75,11 +75,10 @@ public class Logger implements Cloneable {
 
     private Handler mHandler;
     private HandlerThread mHandlerThread;
-    private HandlerCallback mHandlerCallback;
 
     private static ExceptionHandler mExceptionHandler = new ExceptionHandler();
 
-    protected static boolean sUseHandlerThread;
+    private static boolean sUseHandlerThread;
 
 
     @SuppressLint({"AndroidLogDetector", "NoLoggedException"})
@@ -89,7 +88,7 @@ public class Logger implements Cloneable {
 
     @SuppressLint({"AndroidLogDetector", "NoLoggedException"})
     private void createThreadHandler() {
-        mHandlerCallback = new HandlerCallback();
+        HandlerCallback mHandlerCallback = new HandlerCallback();
         mHandlerThread = new HandlerThread(Logger.class.getSimpleName());
         mHandlerThread.start();
         try {
