@@ -107,12 +107,13 @@ public class Logger implements Cloneable {
 
     @SuppressLint({"AndroidLogDetector"})
     private void sendWrite(LogMsg msg) {
+        Message handlerMsg;
         if (sUseHandlerThread && msg.level != Level.ASSERT) {
             if (!mHandlerThread.isAlive()) {
                 createThreadHandler();
             }
-            if (mHandler != null) {
-                mHandler.obtainMessage(0, msg).sendToTarget();
+            if (mHandler != null && (handlerMsg = mHandler.obtainMessage(0, msg)) != null) {
+                handlerMsg.sendToTarget();
             } else {
                 writeLog(msg);
             }

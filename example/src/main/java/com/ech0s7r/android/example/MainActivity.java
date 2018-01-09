@@ -20,6 +20,12 @@ public class MainActivity extends Activity {
         for (int i = 0; i < 5; i++)
             Logger.w("Test before init");
 
+        try {
+            throw new RuntimeException("exception before init");
+        } catch (Exception e) {
+            Logger.e(e);
+        }
+
         initLog();
 
         for (int i = 0; i < 5; i++)
