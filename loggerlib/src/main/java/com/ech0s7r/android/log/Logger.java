@@ -107,17 +107,18 @@ public class Logger implements Cloneable {
 
     @SuppressLint({"AndroidLogDetector"})
     private void sendWrite(LogMsg msg) {
-        //long elapsed = SystemClock.elapsedRealtime();
         if (sUseHandlerThread && msg.level != Level.ASSERT) {
             if (!mHandlerThread.isAlive()) {
                 createThreadHandler();
             }
-            mHandler.obtainMessage(0, msg).sendToTarget();
+            if (mHandler != null) {
+                mHandler.obtainMessage(0, msg).sendToTarget();
+            } else {
+                writeLog(msg);
+            }
         } else {
             writeLog(msg);
         }
-        //Log.d(LoggerConfigurator.APP_NAME, "Logger.sendWrite time: " +
-        //(SystemClock.elapsedRealtime() - elapsed) + " ms.");
     }
 
     private void writeLog(LogMsg msg) {
