@@ -25,6 +25,7 @@ public class LogTestUtils {
     public static boolean hasMessage(String message) {
         waitLoggerLooper();
         for (ShadowLog.LogItem item : ShadowLog.getLogs()) {
+            System.out.println("MARCO: " + item);
             if (item.msg.trim().equals(message)) {
                 return true;
             }

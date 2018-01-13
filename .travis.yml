@@ -1,5 +1,9 @@
 language: android
 
+android:
+  components:
+    - build-tools-27.0.3
+
 jdk:
   - oraclejdk8
 
@@ -7,3 +11,6 @@ notifications:
   email: false
 
 sudo: false
+
+script:
+   - ./gradlew loggerlib:build

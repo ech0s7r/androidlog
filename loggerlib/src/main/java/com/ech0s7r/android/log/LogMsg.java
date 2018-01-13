@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.SystemClock;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * @author ech0s7r
@@ -153,7 +154,7 @@ public class LogMsg {
         } else {
             cal.setTimeInMillis(System.currentTimeMillis());
         }
-        return String.format(
+        return String.format(Locale.US,
                 "%04d-%02d-%02d %02d:%02d:%02d.%03d",
                 cal.get(Calendar.YEAR),
                 (cal.get(Calendar.MONTH) + 1),
