@@ -27,4 +27,4 @@ notifications:
 sudo: false
 
 script:
-   - ./gradlew --debug --stacktrace loggerlib:build
+   - ./gradlew --stacktrace loggerlib:build
