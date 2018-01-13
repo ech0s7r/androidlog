@@ -1,8 +1,9 @@
 language: android
 
 android:
-  components:
-    - build-tools-27.0.3
+  licenses:
+    - android-sdk-license-.+
+    - '.+'
 
 jdk:
   - oraclejdk8
