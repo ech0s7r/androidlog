@@ -1,12 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.ech0s7r.android.log">
 
-    <application>
-
-        <service android:name="com.ech0s7r.android.log.service.WriterService"></service>
-
-    </application>
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application>
+        <service android:name="com.ech0s7r.android.log.service.WriterService"/>
+    </application>
 
 </manifest>

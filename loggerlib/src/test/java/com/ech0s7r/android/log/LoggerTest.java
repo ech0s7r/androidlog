@@ -40,42 +40,42 @@ public class LoggerTest {
     public void testVerbose() {
         Logger.v(TEST_V);
         Assert.assertEquals(expectedSize++, LogTestUtils.logSize());
-        Assert.assertTrue(LogTestUtils.hasMessage("1 LoggerTest.testVerbose (LoggerTest.java:41) " + TEST_V));
+        Assert.assertTrue(LogTestUtils.hasMessage(tid() + " LoggerTest.testVerbose (LoggerTest.java:41) " + TEST_V));
     }
 
     @Test
     public void testDebug() {
         Logger.v(TEST_D);
         Assert.assertEquals(expectedSize++, LogTestUtils.logSize());
-        Assert.assertTrue(LogTestUtils.hasMessage("1 LoggerTest.testDebug (LoggerTest.java:48) " + TEST_D));
+        Assert.assertTrue(LogTestUtils.hasMessage(tid() + " LoggerTest.testDebug (LoggerTest.java:48) " + TEST_D));
     }
 
     @Test
     public void testInfo() {
         Logger.v(TEST_I);
         Assert.assertEquals(expectedSize++, LogTestUtils.logSize());
-        Assert.assertTrue(LogTestUtils.hasMessage("1 LoggerTest.testInfo (LoggerTest.java:55) " + TEST_I));
+        Assert.assertTrue(LogTestUtils.hasMessage(tid() + " LoggerTest.testInfo (LoggerTest.java:55) " + TEST_I));
     }
 
     @Test
     public void testWarning() {
         Logger.v(TEST_W);
         Assert.assertEquals(expectedSize++, LogTestUtils.logSize());
-        Assert.assertTrue(LogTestUtils.hasMessage("1 LoggerTest.testWarning (LoggerTest.java:62) " + TEST_W));
+        Assert.assertTrue(LogTestUtils.hasMessage(tid() + " LoggerTest.testWarning (LoggerTest.java:62) " + TEST_W));
     }
 
     @Test
     public void testError() {
         Logger.v(TEST_E);
         Assert.assertEquals(expectedSize++, LogTestUtils.logSize());
-        Assert.assertTrue(LogTestUtils.hasMessage("1 LoggerTest.testError (LoggerTest.java:69) " + TEST_E));
+        Assert.assertTrue(LogTestUtils.hasMessage(tid() + " LoggerTest.testError (LoggerTest.java:69) " + TEST_E));
     }
 
     @Test
     public void testAssert() {
         Logger.v(TEST_A);
         Assert.assertEquals(expectedSize++, LogTestUtils.logSize());
-        Assert.assertTrue(LogTestUtils.hasMessage("1 LoggerTest.testAssert (LoggerTest.java:76) " + TEST_A));
+        Assert.assertTrue(LogTestUtils.hasMessage(tid() + " LoggerTest.testAssert (LoggerTest.java:76) " + TEST_A));
     }
 
     @Test
@@ -104,6 +104,10 @@ public class LoggerTest {
         Assert.assertTrue(out.contains(TEST_V));
         Assert.assertEquals(0, LogTestUtils.logSize());
         expectedSize++;
+    }
+
+    private static long tid(){
+        return Thread.currentThread().getId();
     }
 
 }
