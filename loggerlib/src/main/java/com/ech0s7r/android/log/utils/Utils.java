@@ -76,8 +76,12 @@ public class Utils {
         double diagonalInches = Math.sqrt((widthInches * widthInches)
                 + (heightInches * heightInches));
 
+        float densityDpi = cx.getResources().getDisplayMetrics().density;
+        float dpHeight = metrics.heightPixels / densityDpi;
+        float dpWidth = metrics.widthPixels / densityDpi;
+
         Logger.w("Screen spec: " + log + getScreenSize(cx) + "/" + density
-                + " inches: " + diagonalInches);
+                + " inches: " + diagonalInches + " dpWidth: " + dpWidth + " dpHeight: " + dpHeight);
     }
 
     private static String getScreenSize(Context cx) {
