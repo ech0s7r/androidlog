@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 
-def libVersion = '1.2.9'
+def libVersion = '1.2.10'
 
 version = libVersion
 ext {
@@ -55,8 +55,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     /* Mockito */
-    testCompile "org.mockito:mockito-core:2.8.9"
-    testCompile "org.mockito:mockito-inline:2.8.9"
+    testImplementation "org.mockito:mockito-core:2.8.9"
+    testImplementation "org.mockito:mockito-inline:2.8.9"
 
     lintChecks project(':lintrules')
 }

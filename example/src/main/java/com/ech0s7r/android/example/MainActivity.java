@@ -1,12 +1,15 @@
 package com.ech0s7r.android.example;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.ech0s7r.android.log.Logger;
 import com.ech0s7r.android.log.LoggerConfigurator;
 import com.ech0s7r.android.log.appender.FileAppender;
 import com.ech0s7r.android.log.appender.LogcatAppender;
+import com.ech0s7r.android.log.appender.LowPriorityAppender;
 import com.ech0s7r.android.log.layout.CsvLayout;
 import com.ech0s7r.android.log.layout.LogcatLayout;
 
@@ -50,6 +53,7 @@ public class MainActivity extends Activity {
         //Log.w("TAG", "lint check should fail here!");
     }
 
+    @SuppressLint("AndroidLogDetector")
     private void initLog() {
         LoggerConfigurator.init(
                 Logger.Level.WARN,        /* Minimum level to log */
@@ -60,6 +64,17 @@ public class MainActivity extends Activity {
                 "AndroidLogApp.log");     /* File name prefix */
         LoggerConfigurator.addAppender(new LogcatAppender(new LogcatLayout()));
         LoggerConfigurator.addAppender(new FileAppender(getApplicationContext(), new CsvLayout()));
+        LoggerConfigurator.addAppender(new LowPriorityAppender(new LogcatLayout()) {
+            @Override
+            public void writeLog(String msg) {
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+
+                }
+                Log.w("AndroidLogApp", "low priority: " + msg);
+            }
+        });
     }
 
     private void test1() {
