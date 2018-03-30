@@ -33,7 +33,7 @@ The library is fully thread-safe, it creates a separate process for the logger a
 Repository available on jCenter
 
 ```
-implementation 'com.ech0s7r.android:loggerlib:1.2.8@aar'
+implementation 'com.ech0s7r.android:loggerlib:1.2.10@aar'
 ```
 
 If the dependency fails to resolve, add this to your project repositories 
