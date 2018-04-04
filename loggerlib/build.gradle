@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jfrog.bintray'
 
-def libVersion = '1.2.9'
+def libVersion = '1.2.11'
 
 version = libVersion
 ext {
@@ -55,8 +55,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     /* Mockito */
-    testCompile "org.mockito:mockito-core:2.8.9"
-    testCompile "org.mockito:mockito-inline:2.8.9"
+    testImplementation "org.mockito:mockito-core:2.8.9"
+    testImplementation "org.mockito:mockito-inline:2.8.9"
 
     lintChecks project(':lintrules')
 }
@@ -95,5 +95,34 @@ bintray {
         }
     }
 }
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+
+    if (JavaVersion.current().isJava8Compatible()) {
+        allprojects {
+            tasks.withType(Javadoc) {
+                options.addStringOption('Xdoclint:none', '-quiet')
+            }
+        }
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
