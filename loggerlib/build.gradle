@@ -91,7 +91,10 @@ bintray {
             desc = 'Android logger library'
             released = new Date()
             vcsTag = 'v' + libVersion
-
+            gpg {
+                sign = true
+                passphrase = properties.getProperty("bintray.gpg.password")
+            }
         }
     }
 }
