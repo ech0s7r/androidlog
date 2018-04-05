@@ -30,13 +30,15 @@ The library is fully thread-safe, it creates a separate process for the logger a
 
 ### Download
 
-Repository available on jCenter
+Repository available on jCenter and [Bintray](https://bintray.com/ech0s7r/Android-Lib/androidlog)
+
+In your build.gradle, add:
 
 ```
-implementation 'com.ech0s7r.android:loggerlib:1.2.11@aar'
+implementation 'com.ech0s7r.android:loggerlib:1.2.11'
 ```
 
-If the dependency fails to resolve, add this to your project repositories 
+<!--If the dependency fails to resolve, add this to your project repositories 
 
 ```
 repositories {
@@ -47,7 +49,7 @@ repositories {
 ```
 
 [Find me on Bintray](https://bintray.com/ech0s7r/Android-Lib/androidlog)
-
+-->
 
 ### *[Optional] Enable text report*
 
@@ -70,7 +72,7 @@ lintOptions {
 
 ### Setting up
 
-1. Import *loggerlib* module into the project
+1. Add *loggerlib* library into the project
 
 2. Initialize the logger using the LoggerConfigurator class 
 
