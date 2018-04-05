@@ -30,7 +30,7 @@ The library is fully thread-safe, it creates a separate process for the logger a
 
 ### Download
 
-Repository available on jCenter and [Bintray](https://bintray.com/ech0s7r/Android-Lib/androidlog)
+Repository available on [jCenter](http://jcenter.bintray.com/com/ech0s7r/android/loggerlib/) and [Bintray](https://bintray.com/ech0s7r/Android-Lib/androidlog)
 
 In your build.gradle, add:
 
