@@ -49,7 +49,7 @@ android {
 dependencies {
     implementation project(':loggerlib')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-//    implementation 'com.ech0s7r.android:loggerlib:1.2.3@aar'
+//    implementation 'com.ech0s7r.android:loggerlib:1.2.11'
 }
 
 repositories {
