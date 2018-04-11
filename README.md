@@ -2,6 +2,8 @@
 <!--[![Build Status](https://travis-ci.com/ech0s7r/androidlog.svg?token=q5qvypmqcQbJyarCtzpo&branch=master)](https://travis-ci.com/ech0s7r/androidlog)-->
 [ ![Download](https://api.bintray.com/packages/ech0s7r/Android-Lib/androidlog/images/download.svg?version=1.2.11) ](https://bintray.com/ech0s7r/Android-Lib/androidlog/1.2.10/link)
 
+<center>![logo](art/rat_alpha.png)</center>
+
 Logger library created for simple integration of logger capability to android applications providing APIs to write logs with different level of verbosity and avoiding to write boilerplate code like declaring TAG for each class or use static functions to get the logger instance every time as implemented in the most logger library on the market. This library makes the logger process simple to use, pretty and powerful. 
 
 The library is distributed as Android Studio project named *loggerlib* that depends on the module *lintrules*.
@@ -183,7 +185,7 @@ New Lint rules are more than welcome and can be added in the *lintrules* module.
 
 ##### Logcat
 
-![logcat example](logcat_example.PNG)
+![logcat example](art/logcat_example.PNG)
 
 Each line logged on Android logcat contains the following elements:
 
@@ -210,7 +212,7 @@ If the application name is MyApp and the file prefix is MyAppAndroid.log, the ge
 >
 > ​	…	
 
-![file_example](file_example.PNG)
+![file_example](art/file_example.PNG)
 
 
 <!--
@@ -239,7 +241,7 @@ Each line has same number of elements comma separated, following elements are no
 License
 -------
 
-    Copyright 2011 ech0s7r
+    Copyright 2012 ech0s7r
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
