@@ -2,7 +2,7 @@
 <!--[![Build Status](https://travis-ci.com/ech0s7r/androidlog.svg?token=q5qvypmqcQbJyarCtzpo&branch=master)](https://travis-ci.com/ech0s7r/androidlog)-->
 [ ![Download](https://api.bintray.com/packages/ech0s7r/Android-Lib/androidlog/images/download.svg?version=1.2.11) ](https://bintray.com/ech0s7r/Android-Lib/androidlog/1.2.10/link)
 
-<center>![logo](art/rat_alpha.png)</center>
+![logcat example](art/rat_alpha.png)
 
 Logger library created for simple integration of logger capability to android applications providing APIs to write logs with different level of verbosity and avoiding to write boilerplate code like declaring TAG for each class or use static functions to get the logger instance every time as implemented in the most logger library on the market. This library makes the logger process simple to use, pretty and powerful. 
 
