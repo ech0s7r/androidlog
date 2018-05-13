@@ -1,30 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.jfrog.bintray'
-
-def libVersion = '1.2.11'
-
-version = libVersion
-ext {
-    bintrayRepo = 'Android-Lib'
-    publishedGroupId = 'com.ech0s7r.android'
-    libraryName = 'androidlog'
-    artifact = 'loggerlib'
-
-    libraryDescription = 'Android logger library'
-
-    libraryVersion = libVersion
-
-    siteUrl = 'https://github.com/ech0s7r/androidlog'
-    gitUrl = 'https://github.com/ech0s7r/androidlog.git'
-
-    developerId = 'ech0s7r'
-    developerName = 'ech0s7r'
-    developerEmail = 'ech0s7r@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-}
-
 
 android {
     compileSdkVersion 27
@@ -48,84 +22,18 @@ android {
 dependencies {
     /* Testing jUnit4 */
     testImplementation 'junit:junit:4.12'
-    testImplementation 'org.robolectric:robolectric:3.5'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    testImplementation 'org.robolectric:robolectric:3.8'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
 
     /* Espresso */
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     /* Mockito */
-    testImplementation "org.mockito:mockito-core:2.8.9"
-    testImplementation "org.mockito:mockito-inline:2.8.9"
+    testImplementation "org.mockito:mockito-core:2.8.47"
+    testImplementation "org.mockito:mockito-inline:2.8.47"
 
     lintChecks project(':lintrules')
 }
 
 
-
-/*************/
-/** Bintray **/
-/*************/
-Properties properties = new Properties()
-if (project.rootProject.file('local.properties').exists()) {
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-}
-
-bintray {
-    user = System.getenv('BINTRAY_USER') ? System.getenv('BINTRAY_USER') : properties.getProperty("bintray.user")
-    key = System.getenv('BINTRAY_API_KEY') ? System.getenv('BINTRAY_API_KEY') : properties.getProperty("bintray.apikey")
-
-    configurations = ['archives']
-    pkg {
-        repo = 'Android-Lib'
-        name = 'androidlog'
-        userOrg = 'ech0s7r'
-        desc = 'Android logger library'
-        websiteUrl = 'https://github.com/ech0s7r/androidlog'
-        vcsUrl = websiteUrl + '.git'
-        licenses = ['Apache-2.0']
-        publish = true
-        publicDownloadNumbers = true
-        version {
-            name = libVersion
-            desc = 'Android logger library'
-            released = new Date()
-            vcsTag = 'v' + libVersion
-            gpg {
-                sign = true
-                passphrase = properties.getProperty("bintray.gpg.password")
-            }
-        }
-    }
-}
-
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
-
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-
-    if (JavaVersion.current().isJava8Compatible()) {
-        allprojects {
-            tasks.withType(Javadoc) {
-                options.addStringOption('Xdoclint:none', '-quiet')
-            }
-        }
-    }
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
