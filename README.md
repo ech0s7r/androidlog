@@ -26,7 +26,8 @@ The order in terms of verbosity, from the least to the most is: ASSERT, ERROR, W
 - String format args
 - Customizable *Layout* and *Appenders*
 
-#### Log in a dedicated process (optional)
+#### [optional] Log in a dedicated process
+
 The library is fully thread-safe, it can be configured for creating a separate process for the logger and communicate with it over AIDL, each library function returns immediately to the caller and the file writing is managed in a separate process with a MIN PRIORITY daemon thread. 
 
 
